@@ -14,7 +14,7 @@ Lately, I've been addressing a *lot* more issues that arise in my life with arbi
 
 This skill came to me naturally, and has always been there, but is just now starting to really begin to blossom as I am engineering more and more solutions within software.
 
-Also, having to meet the demands of clients, whose views and goals differ from my own inceptions, has been a boon to both my software development and the aforementioned skill which is more abstract. It can be made useful in virtually any situation.
+Also having to meet the demands of clients, whose views and goals differ from my own inceptions, has been a boon to both my software development workflow and the aforementioned skill, which is more abstract and could technically be dubbed a "workflow for daily life". It can be made useful in virtually any situation.
 
 
 > [WIP]
