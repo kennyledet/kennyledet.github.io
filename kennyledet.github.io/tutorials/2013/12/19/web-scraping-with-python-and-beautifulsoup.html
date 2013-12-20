@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title> Web Scraping with Python and BeautifulSoup  - Green Tea</title>
+		<!-- For responsive site
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="author" href="/humans.txt">
+		<meta name="description" content="Description Goes Here">
+		<link rel="stylesheet" href="/css/style.css">
+		<!--[if IE 7]>
+			<html class="ie7"> 
+			<link rel="stylesheet" type="text/css" href="/css/font-awesome-ie7.min.css">
+		<![endif]-->
+		<!--[if IE 8]><html class="ie8"> <![endif]-->		
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+		<link rel="shortcut icon" href="ico/favicon.png">	    
+	</head>
+	<body>
+	<!-- Header
+	    ================================================== -->
+	<header>
+
+	</header>
+
+	<main class="content">
+    <section class="container">
+    	<div class="row-fluid">
+    		<article class="home-icon">
+				<a href="/">
+					<i class="icon-home"></i> 
+				</a>
+			</article>
+			<article class="post">
+				<h2 class="content">Web Scraping with Python and BeautifulSoup</h2>
+				<h5>19 December 2013</h5>
+				<section>
+					<p>In this short and to the point tutorial, we will use the infamous Python module <em>BeautifulSoup</em> to code a basic web scraping script that will get some useful project information from Kickstarter.com projects</p>
+
+<h3 id="motivation">Motivation</h3>
+
+<p>Knowing how to scrape the web is an excellent skill to have. The web is huge; thousands of new websites are created every day so there is always new content to work with. By extension, this also means that there will always be tons of web scraping projects needing to be done <em>(this translates into money for us)</em>.</p>
+
+<p>And if you already know Python, you really have no excuse to not know how to utilize the language in this area.</p>
+<!--more-->
+<h3 id="technical_requirements">Technical Requirements</h3>
+
+<ul>
+<li><a href="http://python.org/">Python 2.x+</a></li>
+
+<li><a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup4</a></li>
+</ul>
+
+<h2 id="tutorial">Tutorial</h2>
+
+<h4 id="introduction">Introduction</h4>
+
+<p>Simply put, Kickstarter is a <em>crowdfunding</em> site where people can get funding for their projects through the power of the internet.</p>
+
+<p>I’ll be using <a href="http://www.kickstarter.com/projects/sparkdevices/spark-core-wi-fi-for-everything-arduino-compatible">this fairly interesting project</a> as a reference, but the techniques we use here will apply to any Kickstarter project page so choose any one that interests you.</p>
+
+<p>First, import the required modules.</p>
+<div class='highlight'><pre><code class='python'><span class='c'># import required modules.</span>
+<span class='kn'>import</span> <span class='nn'>urllib2</span>
+<span class='kn'>from</span> <span class='nn'>bs4</span> <span class='kn'>import</span> <span class='n'>BeautifulSoup</span>
+</code></pre></div>
+<h4 id="getting_the_html">Getting the HTML</h4>
+
+<p>We obviously need to get some <em>HTML</em> before we start using BeautifulSoup. How you go about getting the page’s HTML is something BeautifulSoup leaves up to you. In this tutorial we use <a href="http://docs.python.org/2/howto/urllib2.html"><em>urllib2</em></a> as it is a standard Python module.</p>
+
+<p>We can retrieve HTML from a page by passing a <em>URL</em> into <code>urllib2.urlopen()</code> and calling the <code>read()</code> method on the <em>HTTP response object</em> it returns.</p>
+<div class='highlight'><pre><code class='python'><span class='n'>url</span>  <span class='o'>=</span> <span class='s'>&#39;http://www.kickstarter.com/projects/sparkdevices/spark-core-wi-fi-for-everything-arduino-compatible&#39;</span>
+<span class='n'>res</span>  <span class='o'>=</span> <span class='n'>urllib2</span><span class='o'>.</span><span class='n'>urlopen</span><span class='p'>(</span><span class='n'>url</span><span class='p'>)</span>  <span class='c'># response object</span>
+<span class='n'>html</span> <span class='o'>=</span> <span class='n'>res</span><span class='o'>.</span><span class='n'>read</span><span class='p'>()</span>
+</code></pre></div>
+<h4 id="the_soup">The Soup</h4>
+
+<p>In order to start using BeautifulSoup, we need to initialize a <em>BeautifulSoup object</em> by passing our HTML string into the <em>BeautifulSoup() constructor</em>.</p>
+<div class='highlight'><pre><code class='python'><span class='n'>soup</span> <span class='o'>=</span> <span class='n'>BeautifulSoup</span><span class='p'>(</span><span class='n'>html</span><span class='p'>)</span>
+</code></pre></div>
+<p>Once we have this object initialized, we have access to various pieces of general page information right off the bat.</p>
+<div class='highlight'><pre><code class='python'><span class='k'>print</span> <span class='n'>soup</span><span class='o'>.</span><span class='n'>title</span><span class='o'>.</span><span class='n'>text</span>  <span class='c'># page title</span>
+<span class='c'># Spark Core: Wi-Fi for Everything (Arduino Compatible) by Spark Devices — Kickstarter</span>
+</code></pre></div>
+<h4 id="getting_more_information">Getting More Information</h4>
+
+<p>This is where your browser’s development tools come in <em>very</em> handy. I’m using Firefox (Nightly), but Chrome/Chromium and Safari also have a nice set of development tools.</p>
+
+<p>In any case, by right clicking on a <em>page element</em> and selecting <em>Inspect Element</em> or similar, we can jump to where the element is in the page’s <em>source HTML</em>.</p>
+
+<p>Let’s say we wanted our scraper to know how many backers the Kickstarter project has.</p>
+
+<p>By inspecting one of the elements that contain this information (there are two on each project page), we find that it has an <a href="http://www.htmldog.com/guides/html/beginner/tags/"><em>HTML attribute</em></a> called <code>itemprop</code> with a value of <code>&quot;Project[backers_count]&quot;</code></p>
+
+<p>We can use this <em>attribute/value mapping</em> to tell BeautifulSoup how to find the element</p>
+
+<p>We can <em>see</em> the number of backers, but now let’s find this element programmatically with our <code>soup</code> object by calling its <code>find</code> method. We’ll pass the type of tag (<code>data</code> here) as the first argument, followed by the attribute/value mappings we want to match. These mappings are passed in as keyword arguments.</p>
+<div class='highlight'><pre><code class='python'><span class='n'>num_backers_element</span> <span class='o'>=</span> <span class='n'>soup</span><span class='o'>.</span><span class='n'>find</span><span class='p'>(</span><span class='s'>&#39;data&#39;</span><span class='p'>,</span> <span class='n'>itemprop</span><span class='o'>=</span><span class='s'>&#39;Project[backers_count]&#39;</span><span class='p'>)</span>
+<span class='c'># &lt;data class=&quot;Project373368980&quot; data-format=&quot;number&quot; data-value=&quot;4201&quot; itemprop=&quot;Project[backers_count]&quot; value=&quot;4201&quot;&gt;4,201&lt;/data&gt;</span>
+</code></pre></div>
+<p>This returns <strong>one</strong> <em>BeautifulSoup HTML element object</em>. We can do tons of shit with it, but most relevant right now is the fact that we can access all of its attribute/value mappings by using it as we would any normal Python dictionary and passing its attributes as keys.</p>
+
+<p>Let’s get the number of backers as we intended by getting the element’s <code>value</code> attribute.</p>
+<div class='highlight'><pre><code class='python'><span class='n'>num_backers</span> <span class='o'>=</span> <span class='n'>num_backers_element</span><span class='p'>[</span><span class='s'>&#39;value&#39;</span><span class='p'>]</span>
+<span class='c'># &#39;4201&#39; &lt;- yes, this is a string. cast it to an integer by calling int(num_backers)</span>
+</code></pre></div>
+<p>So what if we wanted to find <em>multiple</em> elements that match our criteria? We use <code>find_all</code>. Remember how the number of backers appears twice on the project page? Let’s prove that here.</p>
+<div class='highlight'><pre><code class='python'><span class='k'>print</span> <span class='n'>soup</span><span class='o'>.</span><span class='n'>find_all</span><span class='p'>(</span><span class='s'>&#39;data&#39;</span><span class='p'>,</span> <span class='n'>itemprop</span><span class='o'>=</span><span class='s'>&#39;Project[backers_count]&#39;</span><span class='p'>)</span>
+<span class='c'># should return a list of all elements with an itemprop of &#39;Project[backers_count]&#39;</span>
+</code></pre></div>
+<h3 id="conclusion">Conclusion</h3>
+
+<p>If you enjoyed this tutorial, please note that I’ll be posting good stuff like this <em>all the fucking time</em>. <a href="http://www.twitter.com/kennyledet">Follow me on Twitter</a> to know when there’s something new.</p>
+					<hr>
+				</section>
+				<section style="margin-bottom: 2em;">
+					
+						
+				</section>
+			</article>
+		</div>
+	</section>
+</main>
+
+
+	<footer>
+		<div class="container">
+			<a href="http://richbray.me/frap/">Frappuccino</a> | Copyright 2013 Kendrick Ledet
+		</div>
+	</footer>
+
+	<!-- Footer
+	    ================================================== -->
+
+	<!-- Javascripts 
+	    ================================================= -->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/custom.js"></script>
+
+    <!-- Analytics
+    ================================================== -->
+    <script>
+		// analytics code
+    </script>	
+	</body>
+</html>
