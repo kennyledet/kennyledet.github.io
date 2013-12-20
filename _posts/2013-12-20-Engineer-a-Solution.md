@@ -1,4 +1,12 @@
-##Engineering solutions [to problems in daily life].
+---
+layout: post_page
+title: "Engineer a Solution"
+date: 2013-12-20 01:11
+comments: true
+categories: tutorials
+---
+
+###Engineering solutions [to problems in daily life].
 - - - -
 
 ####Motivation
@@ -9,5 +17,5 @@ This skill came to me naturally, and has always been there, but is just now star
 Also, having to meet the demands of clients, whose views and goals differ from my own inceptions, has been a boon to both my software development and the aforementioned skill which is more abstract. It can be made useful in *virtually any situation*.
 
 
-> [WIP]
-> 	This post is actually a draft, but I still wanted it up to share the motivation piece with some of my peers.**
+>   WIP
+> 	This post is actually a draft, but I still wanted it up to share the motivation piece with some of my peers.
